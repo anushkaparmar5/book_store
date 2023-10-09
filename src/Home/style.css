@@ -1,0 +1,134 @@
+.page-header {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.page-filters {
+}
+
+.all-books {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.book-card .card-link {
+  color: black;
+  text-decoration: none;
+}
+
+.book-card:hover {
+  transform: scale(1.03);
+  transition: all ease-in-out 0.5s;
+}
+
+.book-card .card-header img {
+  max-width: 400px;
+  max-height: 300px;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.book-card .card-footer {
+  background-color: whitesmoke;
+  color: black;
+  text-decoration: none;
+  border-radius: 0px 0px 20px 20px !important;
+  padding: 5px 10px;
+}
+
+.book-card .card-footer .title-box .title {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.book-card .card-footer .author-publisher {
+  font-size: 12px;
+}
+
+.book-card .card-footer .price-rating-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-card .card-footer .price-rating-box .price-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.book-card .card-footer .price-rating-box .price-box .sale-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #212121;
+}
+
+.book-card .card-footer .price-rating-box .price-box .discount {
+  color: #388e3c;
+  font-size: 13px;
+}
+
+.book-card .card-footer .price-rating-box .price-box .actual-price {
+  text-decoration: line-through;
+  font-size: 14px;
+  color: #878787;
+}
+
+.book-card .card-footer .price-rating-box .rating,
+.star-icon {
+  background-color: #388e3c;
+  color: white;
+  padding: 0px 3px;
+  border-radius: 3px;
+}
+
+.book-card .card-footer .buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  gap: 50px;
+}
+.cart-icon-button {
+  background-color: #2d9cdb;
+  color: white;
+  padding: 10px 40px;
+  font-size: 20px;
+  border: 1px solid white;
+  border-radius: 50px;
+  width: 100%;
+}
+.cart-icon-button:hover {
+  color: #2d9cdb;
+  background-color: white;
+  border: 1px solid #2d9cdb;
+  transition: all ease-in-out 0.3s;
+}
+
+.view-icon-button {
+  color: #2d9cdb;
+  border: 1px solid #2d9cdb;
+  padding: 0px 0px;
+  border-radius: 50px;
+  padding: 10px 40px;
+  font-size: 20px;
+  width: 100%;
+}
+
+.view-icon-button:hover {
+  background-color: #2d9cdb;
+  color: white;
+  border: 1px solid white;
+  transition: all ease-in-out 0.3s;
+}
