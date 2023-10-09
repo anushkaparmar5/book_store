@@ -1,6 +1,9 @@
-import { BrowserRouter as Router, Route, Switch, BrowserRouter, Routes } from 'react-router-dom';
-
-import Header from './BooksStore/Header';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import Home from './Home';
+import Header from './Components';
+import ErrorPage from './Components/404Page';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.js'
 
 function App() {
   return (
@@ -8,16 +11,9 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-
-
-          <Route path='/' element={<Books />} />
-          <Route path="/skill" element={<Skill />} />
-          <Route path="/contect" element={<Contect />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/work" element={<Work />} />
-
+          <Route path='/' element={<Home />} />
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
-
       </BrowserRouter>
     </div>
   );
