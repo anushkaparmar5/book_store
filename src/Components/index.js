@@ -15,7 +15,7 @@ const Header = () => {
                             <Link className="nav-link active" to={"/"}>Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to={"/admin/books"}>Admin Side</Link>
+                            <Link className="nav-link" to={"/admin/book/add"}>Admin Side</Link>
                         </li>
                     </ul>
                     <form className="d-flex" role="search">

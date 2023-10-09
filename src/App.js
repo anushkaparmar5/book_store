@@ -4,6 +4,7 @@ import Header from './Components';
 import ErrorPage from './Components/404Page';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
+import AddBook from './Admin/AddBook';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/admin/book/add' element={<AddBook />} />
           <Route path='*' element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
