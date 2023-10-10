@@ -1,6 +1,7 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import "./style.css";
+import { URLS } from '../../Constant';
 
 
 const Header = () => {
@@ -10,7 +11,7 @@ const Header = () => {
                 <div className="left-menu">
                     <ul>
                         <li><NavLink to={"/"}>Home</NavLink></li>
-                        <li><NavLink to={"/admin/books"}>Admin Penal</NavLink></li>
+                        <li><NavLink to={URLS.Books}>Admin Penal</NavLink></li>
                     </ul>
                 </div>
                 <div className="logo">
@@ -20,6 +21,7 @@ const Header = () => {
                     <div className="input-box">
                         <input type="search" name="search" id="search" placeholder='Search here...' />
                         <button type="submit">Search</button>
+                        <Link to={URLS.Cart} className='cart-icon-Link'><i className="fa-solid fa-cart-plus"></i></Link>
                     </div>
                 </div>
             </div>

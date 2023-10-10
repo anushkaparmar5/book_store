@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { resetMessage, userAdd, userEdit } from '../../BookSlics/BookSlics';
+// import { resetMessage, userAdd, userDelete, userEdit } from './bookSlice';
 
 const AddBook = () => {
     let initialValue = {
@@ -15,11 +17,11 @@ const AddBook = () => {
         rating: ""
     }
     const [formData, setFormData] = useState(initialValue);
+    console.log('dormData :>> ', formData);
     const [errors, setErrors] = useState({});
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    // const { usersData, count, message } = useSelector((state) => state.users);
-    // console.log('userData :>> ', usersData, count);
+
 
     const requiredValue = (name, value, image) => {
         let error = {};
@@ -45,9 +47,9 @@ const AddBook = () => {
         e.preventDefault();
         if (!validateFormData(formData)) {
             if (formData?.id) {
-                // dispatch(userEdit(formData));
+                dispatch(userEdit(formData));
             } else {
-                // dispatch(userAdd({ ...formData, id: Date.now() }));
+                dispatch(userAdd({ ...formData, id: Date.now() }));
             }
             setFormData(initialValue);
         }
@@ -60,7 +62,7 @@ const AddBook = () => {
         requiredValue(name, value, image);
         setFormData((prev) => ({
             ...prev,
-            [name]: value === "image" ? image === true ? [...prev?.images, image] : value : [],
+            [name]: value,
         }));
     };
 
@@ -72,19 +74,7 @@ const AddBook = () => {
     //     setFormData(data);
     // };
 
-    // if (message?.text && message?.type) {
-    //     if (message?.type === "success") {
-    //         toast.success(message?.text);
-    //         // dispatch(resetMessage());
-    //     } else if (message?.type === "error") {
-    //         toast.error(message?.text)
-    //         // dispatch(resetMessage())
-    //     } else if (message?.type === "warning") {
-    //         toast.warning(message?.text)
-    //         // dispatch(resetMessage())
-    //     }
-    //     // code for other type
-    // }
+
     return (
         <div className='container'>
             <div className='mt-2 mx-5'>
@@ -118,6 +108,11 @@ const AddBook = () => {
                         <label htmlFor="discount" className="form-label">Discount</label>
                         <input type="number" className="form-control" id="discount" name="discount" value={formData?.discount} onChange={handleOnChange} />
                         <small className='text-danger'>{errors["discount"]}</small>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="actual_price" className="form-label">Actual Price</label>
+                        <input type="actual_price" className="form-control" id="actual_price" name="actual_price" value={formData?.actual_price} onChange={handleOnChange} />
+                        <small className='text-danger'>{errors["actual_price"]}</small>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="images" className="form-label">Image</label>
