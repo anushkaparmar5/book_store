@@ -3,17 +3,24 @@ import "./style.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { URLS } from '../Constant';
 import Loader from '../Components/Loader';
+import CustomButton from '../Components/CustomButton';
+import { calculateDiscountedPrice } from '../utils';
 import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, clearMessage } from '../CartSlice/cartSlice';
 import { toast } from 'react-toastify';
-import { resetMessage } from '../BookSlics/BookSlics';
 
 const Home = () => {
     const navigate = useNavigate();
+    const message = useSelector((state) => state.cart.message)
+    const cartLoading = useSelector((state) => state.cart.cartLoading)
     const [isLoading, setLoading] = useState(true);
     const [allBooks, setAllBooks] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState("Price High To Low")
-
-    const handleAddToCart = (item) => { };
+    const dispatch = useDispatch();
+    const handleAddToCart = (item) => {
+        console.log("handleAddToCart")
+        dispatch(addToCart(item))
+    };
 
     const handleViewItem = (item) => {
         navigate(`${URLS.BookDetails}/${item?._id}`);
@@ -48,6 +55,20 @@ const Home = () => {
         setSelectedFilter(value);
     }
 
+    if (message?.text && message?.type) {
+        if (message?.type === "success") {
+            toast.success(message?.text);
+            dispatch(clearMessage());
+        } else if (message?.type === "error") {
+            toast.error(message?.text)
+            dispatch(clearMessage())
+        } else if (message?.type === "warning") {
+            toast.warning(message?.text)
+            dispatch(clearMessage())
+        }
+    }
+
+
     useEffect(() => {
         getBooks();
     }, []);
@@ -70,7 +91,7 @@ const Home = () => {
                         {sortedItems?.length ? sortedItems.map((book, index) => {
                             return (
                                 <div className="book-card" key={index}>
-                                    <Link className='card-link' to={`${URLS.BookDetails}/${book?._id}`}>
+                                    <div>
                                         <div className="card-header">
                                             <img src={book?.images[0]} alt="book" />
                                         </div>
@@ -81,9 +102,9 @@ const Home = () => {
                                             </div>
                                             <div className="price-rating-box">
                                                 <div className="price-box">
-                                                    <span className='sale-price'>{book?.price} <i className="fa-solid fa-indian-rupee-sign"></i></span>
-                                                    <span className='discount'>{book?.discount}</span>
-                                                    <span className='actual-price'>{book?.actual_price} <i className="fa-solid fa-indian-rupee-sign"></i></span>
+                                                    <span className='sale-price'><i className="fa-solid fa-indian-rupee-sign"></i>{calculateDiscountedPrice(book?.price, book?.discount)}</span>
+                                                    <span className='actual-price'><i className="fa-solid fa-indian-rupee-sign"></i>{book?.price}</span>
+                                                    <span className='discount'>{book?.discount}% off</span>
                                                 </div>
                                                 <div className="rating">
                                                     <span>{book?.rating}</span>
@@ -91,11 +112,11 @@ const Home = () => {
                                                 </div>
                                             </div>
                                             <div className="buttons">
-                                                <button onClick={() => handleAddToCart(book)} className='cart-icon-button'><i className="fa-solid fa-cart-plus"></i></button>
-                                                <button onClick={() => handleViewItem(book)} className='view-icon-button'><i className="fa-regular fa-eye"></i></button>
+                                                <CustomButton disabled={cartLoading} onclick={() => handleAddToCart(book)} className="" variant="primary" icon={<i className="fa-solid fa-cart-plus"></i>} />
+                                                <CustomButton onclick={() => handleViewItem(book)} className="" variant="outline" icon={<i className="fa-regular fa-eye"></i>} />
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 </div>
                             )
                         }) :

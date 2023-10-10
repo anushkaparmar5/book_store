@@ -1,0 +1,133 @@
+.no-data {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.cart-wrapper {
+  background-color: whitesmoke;
+  min-height: 88vh;
+}
+
+.cart-wrapper .row {
+  display: flex;
+  gap: 20px;
+}
+
+.left-cart-box {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 0px;
+}
+
+.left-cart-box .title {
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid whitesmoke;
+  margin-bottom: 20px;
+}
+
+.right-cart-box {
+  padding: 0px;
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 10px 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 20px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  padding: 0px 0px;
+  margin: 20px 20px;
+}
+
+.image-box img {
+  width: 150px;
+  height: 100%;
+  display: block;
+  margin: auto;
+  max-height: 150px;
+}
+
+.book-data .title {
+  border: none;
+  font-size: 16px;
+  color: #212121;
+  line-height: 1;
+  display: inline;
+}
+
+.book-data .author {
+  display: block;
+  color: #878787;
+  font-size: 14px;
+  height: 20px;
+}
+
+.book-data .prices .sale-price {
+  font-size: 18px;
+  font-weight: 500;
+  color: #212121;
+}
+.book-data .prices .actual-price {
+  color: #878787;
+  text-decoration: line-through;
+}
+.book-data .prices .discount {
+  font-weight: 500;
+  color: #388e3c;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.qty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-right: 50px;
+}
+
+.qty-btn span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.price-details-box {
+  position: sticky;
+  top: 70px;
+  right: 0px;
+}
+
+.price-details-box .title {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid whitesmoke;
+}
+
+.price-details-box .price {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.discount-value {
+  color: #388e3c;
+}
+.charges {
+  text-decoration: line-through;
+  color: #717478;
+}
+.save-text {
+  border-top: 1px solid whitesmoke;
+  color: #388e3c;
+  text-align: center;
+}
