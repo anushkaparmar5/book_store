@@ -4,10 +4,16 @@ import Loader from '../Components/Loader';
 import { calculateDiscountedPrice, capitalize, titleCase } from '../utils';
 import "./style.css";
 import CustomButton from '../Components/CustomButton';
+import { addToCart, clearMessage } from '../CartSlice/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 
 function ViewBook() {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const message = useSelector((state) => state.cart.message)
+    const cartLoading = useSelector((state) => state.cart.cartLoading)
     const [bookData, setBookData] = useState({});
     const [isLoading, setLoading] = useState(true);
 
@@ -23,8 +29,25 @@ function ViewBook() {
             .catch(rejected => {
                 console.log(rejected);
             });
-
     }
+
+    const handleAddToCart = (item) => {
+        dispatch(addToCart(item))
+    };
+
+    if (message?.text && message?.type) {
+        if (message?.type === "success") {
+            toast.success(message?.text);
+            dispatch(clearMessage());
+        } else if (message?.type === "error") {
+            toast.error(message?.text)
+            dispatch(clearMessage())
+        } else if (message?.type === "warning") {
+            toast.warning(message?.text)
+            dispatch(clearMessage())
+        }
+    }
+
     useEffect(() => {
         getBook();
     }, []);
@@ -39,7 +62,7 @@ function ViewBook() {
                             <img alt="cover" src={bookData?.images[0]}></img>
                         </div>
                         <div className='buttons'>
-                            <CustomButton onclick={() => { }} className="" variant="primary" text='Add To Cart' icon={<i className="fa-solid fa-cart-plus"></i>} />
+                            <CustomButton disabled={cartLoading} onclick={() => handleAddToCart(bookData)} className="" variant="primary" text='Add To Cart' icon={<i className="fa-solid fa-cart-plus"></i>} />
                         </div>
                     </div>
                 </div>

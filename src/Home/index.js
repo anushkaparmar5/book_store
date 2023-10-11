@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./style.css";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { URLS } from '../Constant';
 import Loader from '../Components/Loader';
 import CustomButton from '../Components/CustomButton';
@@ -11,14 +11,15 @@ import { toast } from 'react-toastify';
 
 const Home = () => {
     const navigate = useNavigate();
-    const message = useSelector((state) => state.cart.message)
-    const cartLoading = useSelector((state) => state.cart.cartLoading)
+    const dispatch = useDispatch();
+    const message = useSelector((state) => state.cart.message);
+    const cartLoading = useSelector((state) => state.cart.cartLoading);
+
     const [isLoading, setLoading] = useState(true);
     const [allBooks, setAllBooks] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState("Price High To Low")
-    const dispatch = useDispatch();
+
     const handleAddToCart = (item) => {
-        console.log("handleAddToCart")
         dispatch(addToCart(item))
     };
 
@@ -127,7 +128,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 

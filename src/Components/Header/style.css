@@ -18,7 +18,7 @@
   font-size: 20px;
 }
 
-.left-menu>ul {
+.left-menu > ul {
   list-style: none;
   display: flex;
   align-items: center;
@@ -61,4 +61,14 @@
 .cart-icon-Link {
   color: gray;
   font-size: 20px;
+}
+
+.cart-count {
+  background-color: grey;
+  color: white;
+  padding: 3px 7px;
+  border-radius: 50px;
+  position: relative;
+  top: -10px;
+  left: 0px;
 }

@@ -3,17 +3,85 @@ import Loader from '../Components/Loader';
 import CustomButton from '../Components/CustomButton';
 import "./style.css";
 import { useNavigate } from 'react-router-dom';
-import { calculateDiscountedPrice, capitalize, titleCase } from "../utils/index"
-import { useSelector } from 'react-redux';
+import { capitalize, titleCase } from "../utils/index"
+import { useDispatch, useSelector } from 'react-redux';
+import { clearMessage, removeFromCart, updateQuantity } from '../CartSlice/cartSlice';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
     const cartItems = useSelector((state) => state.cart.cartItems).filter((value) => value?.userId === 1);
     const isLoading = useSelector((state) => state.cart.isLoading);
+    const message = useSelector((state) => state.cart.message)
+    const cartLoading = useSelector((state) => state.cart.cartLoading)
     const navigate = useNavigate();
-    console.log('cartItems :>> ', cartItems);
+    const dispatch = useDispatch();
 
     const handleHomeClick = () => {
         navigate("/");
+    }
+
+    const handleCartItemRemove = (item) => {
+        dispatch(removeFromCart(item));
+    };
+
+    const handleCartItemUpdate = (item, action) => {
+        let quantity = cartItems.find(_item => _item?._id === item?._id)?.quantity;
+        if (action === "INC")
+            quantity += 1;
+        else if (action === "DEC")
+            quantity -= 1;
+        if (quantity === 0) {
+            dispatch(removeFromCart(item));
+        } else {
+            dispatch(updateQuantity({ _id: item._id, userId: item.userId, quantity }));
+        }
+    };
+
+    const calculateDiscountedPrice = (item) => {
+        // Calculate the discounted price for each item based on its discount
+        return item.price - item.price * (item.discount / 100);
+    };
+
+    const calculateIndividualPrice = (item) => {
+        // Calculate the price for each item based on its quantity
+        return calculateDiscountedPrice(item) * item.quantity;
+    };
+
+    const calculateTotalPrice = () => {
+        // Calculate the total price of all items in the cart
+        const totalPrice = cartItems.reduce((total, item) => {
+            return total + calculateIndividualPrice(item);
+        }, 0);
+        return totalPrice;
+    };
+
+    const calculateSubTotalPrice = () => {
+        // Calculate the total price of all items in the cart
+        const totalPrice = cartItems.reduce((total, item) => {
+            return total + item.price * item.quantity;
+        }, 0);
+        return totalPrice;
+    };
+
+    const calculateTotalDiscount = () => {
+        // Calculate the total price of all items in the cart
+        const totalPrice = cartItems.reduce((total, item) => {
+            return total + item.discount * item.quantity;
+        }, 0);
+        return totalPrice;
+    };
+
+    if (message?.text && message?.type) {
+        if (message?.type === "success") {
+            toast.success(message?.text);
+            dispatch(clearMessage());
+        } else if (message?.type === "error") {
+            toast.error(message?.text)
+            dispatch(clearMessage())
+        } else if (message?.type === "warning") {
+            toast.warning(message?.text)
+            dispatch(clearMessage())
+        }
     }
 
     return (isLoading ?
@@ -35,7 +103,7 @@ const Cart = () => {
                                         <div className='prices'>
                                             <div className='sale-price'>
                                                 <i className="fa-solid fa-indian-rupee-sign"></i>
-                                                <span>{calculateDiscountedPrice(item?.price, item?.discount)}</span>
+                                                <span>{calculateDiscountedPrice(item)}</span>
                                             </div>
                                             <div className='actual-price'>
                                                 <i className="fa-solid fa-indian-rupee-sign"></i>
@@ -47,14 +115,14 @@ const Cart = () => {
                                         </div>
                                         <div className="buttons">
                                             <div className="qty-btn">
-                                                <CustomButton onclick={() => { }} icon={<i className="fa-solid fa-minus"></i>} variant='outline' />
+                                                <CustomButton disabled={cartLoading} onclick={() => handleCartItemUpdate(item, "DEC")} icon={<i className="fa-solid fa-minus"></i>} variant='outline' />
                                                 <span>
                                                     {item?.quantity}
                                                 </span>
-                                                <CustomButton onclick={() => { }} icon={<i className="fa-solid fa-plus"></i>} variant='outline' />
+                                                <CustomButton disabled={cartLoading} onclick={() => handleCartItemUpdate(item, "INC")} icon={<i className="fa-solid fa-plus"></i>} variant='outline' />
                                             </div>
                                             <div className="remove-btn">
-                                                <CustomButton onclick={() => { }} text='Remove' />
+                                                <CustomButton disabled={cartLoading} onclick={() => handleCartItemRemove(item)} text='Remove' />
                                             </div>
                                         </div>
                                     </div>
@@ -67,16 +135,12 @@ const Cart = () => {
                             <div className="title">PRICE DETAILS</div>
                             <div className="price-details">
                                 <div className="price">
-                                    <div className="key">Price (1 item)</div>
-                                    <div className="value"><i className="fa-solid fa-indian-rupee-sign"></i> 500</div>
-                                </div>
-                                <div className="price">
-                                    <div className="key">Price (1 item)</div>
-                                    <div className="value"><i className="fa-solid fa-indian-rupee-sign"></i> 500</div>
+                                    <div className="key">Price ({cartItems?.length} item)</div>
+                                    <div className="value"><i className="fa-solid fa-indian-rupee-sign"></i> {calculateSubTotalPrice()}</div>
                                 </div>
                                 <div className="price">
                                     <div className="key">Discount</div>
-                                    <div className="discount-value"> <i className="fa-solid fa-minus"></i> <i className="fa-solid fa-indian-rupee-sign"></i> 40</div>
+                                    <div className="discount-value"> <i className="fa-solid fa-minus"></i> <i className="fa-solid fa-indian-rupee-sign"></i> {calculateTotalDiscount()}</div>
                                 </div>
                                 <div className="price">
                                     <div className="key">Delivery Charges</div>
@@ -85,10 +149,7 @@ const Cart = () => {
                                 <hr />
                                 <div className="price">
                                     <div className="total-key">Total Amount Charges</div>
-                                    <div className="total-value"><i className="fa-solid fa-indian-rupee-sign"></i> 460 </div>
-                                </div>
-                                <div className="save-text">
-                                    You will save <i className="fa-solid fa-indian-rupee-sign"></i> 40 on this order
+                                    <div className="total-value"><i className="fa-solid fa-indian-rupee-sign"></i> {calculateTotalPrice()} </div>
                                 </div>
                             </div>
                         </div>
