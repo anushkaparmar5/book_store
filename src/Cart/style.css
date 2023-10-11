@@ -73,10 +73,12 @@
   font-weight: 500;
   color: #212121;
 }
+
 .book-data .prices .actual-price {
   color: #878787;
   text-decoration: line-through;
 }
+
 .book-data .prices .discount {
   font-weight: 500;
   color: #388e3c;
@@ -87,6 +89,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 .qty-btn {
   display: flex;
   align-items: center;
@@ -122,12 +125,32 @@
 .discount-value {
   color: #388e3c;
 }
+
 .charges {
   text-decoration: line-through;
   color: #717478;
 }
+
 .save-text {
   border-top: 1px solid whitesmoke;
   color: #388e3c;
   text-align: center;
+}
+
+
+/* media query */
+@media only screen and (max-width: 350px) {
+  .cart-item {
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+
+  .buttons {
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .col-3 {
+    width: 100%;
+  }
 }

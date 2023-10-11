@@ -11,8 +11,7 @@
   font-weight: 400;
 }
 
-.page-filters {
-}
+.page-filters {}
 
 .all-books {
   display: flex;
@@ -125,4 +124,15 @@
   position: absolute;
   bottom: 6%;
   right: 35%;
+}
+
+/* media query */
+@media only screen and (max-width: 350px) {
+  .book-card .card-footer .buttons {
+    gap: 10px;
+  }
+
+  .book-card .card-footer .price-rating-box .price-box {
+    margin-right: 10px;
+  }
 }

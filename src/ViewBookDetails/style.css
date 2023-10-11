@@ -1,19 +1,23 @@
 .row {
   margin-top: 20px;
 }
+
 .left-box {
   position: sticky;
   top: 0px;
   left: 0px;
 }
+
 .image-buttons {
   position: sticky;
   top: 70px;
   left: 0px;
 }
+
 .buttons {
   margin-top: 10px;
 }
+
 .book-image img {
   width: 100%;
   height: 500px;
@@ -49,6 +53,7 @@
 .book-details .price-box {
   margin-top: 20px;
 }
+
 .price-box .title {
   color: #388e3c;
   font-size: 14px;
@@ -96,4 +101,11 @@
 
 .author-publisher .value {
   margin-left: 20px;
+}
+
+/* media query */
+@media only screen and (max-width: 350px) {
+  .left-box {
+    position: relative;
+  }
 }

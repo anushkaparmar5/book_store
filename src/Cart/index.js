@@ -38,17 +38,14 @@ const Cart = () => {
     };
 
     const calculateDiscountedPrice = (item) => {
-        // Calculate the discounted price for each item based on its discount
         return item.price - item.price * (item.discount / 100);
     };
 
     const calculateIndividualPrice = (item) => {
-        // Calculate the price for each item based on its quantity
         return calculateDiscountedPrice(item) * item.quantity;
     };
 
     const calculateTotalPrice = () => {
-        // Calculate the total price of all items in the cart
         const totalPrice = cartItems.reduce((total, item) => {
             return total + calculateIndividualPrice(item);
         }, 0);
@@ -56,7 +53,6 @@ const Cart = () => {
     };
 
     const calculateSubTotalPrice = () => {
-        // Calculate the total price of all items in the cart
         const totalPrice = cartItems.reduce((total, item) => {
             return total + item.price * item.quantity;
         }, 0);
@@ -64,7 +60,6 @@ const Cart = () => {
     };
 
     const calculateTotalDiscount = () => {
-        // Calculate the total price of all items in the cart
         const totalPrice = cartItems.reduce((total, item) => {
             return total + item.discount * item.quantity;
         }, 0);
